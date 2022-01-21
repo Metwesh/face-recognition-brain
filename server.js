@@ -4,11 +4,8 @@ const cors = require("cors");
 const knex = require("knex")({
   client: "pg",
   connection: {
-    host: "127.0.0.1",
-    port: 5432,
-    user: "mohamedh.aly",
-    password: "",
-    database: "smart-brain",
+    host: process.env.DATABASE_URL,
+    ssl: true,
   },
 });
 
