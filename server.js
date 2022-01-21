@@ -30,9 +30,7 @@ app.use(express.json());
 
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.send("sucess");
-});
+app.get("/", (req, res) => res.send("sucess"));
 
 app.post("/register", register.handleRegister(knex, bcrypt));
 
@@ -42,7 +40,9 @@ app.get("/profile/:id", profile.handleProfileGet(knex));
 
 app.put("/image", image.handleImage(knex));
 
-app.post("/imageurl", (req, res) => {imageApi.handleApiCall(req, res)});
+app.post("/imageurl", (req, res) => {
+  imageApi.handleApiCall(req, res);
+});
 
 app.listen(process.env.PORT || 3001, () => {
   console.log(`app is running on port ${process.env.PORT}`);
