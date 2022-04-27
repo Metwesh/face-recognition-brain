@@ -39,15 +39,7 @@ app.use(express.json());
 
 app.use(cors());
 
-app.get("/", (req, res) =>
-  knex
-    .select("*")
-    .from("users")
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((error) => res.send(error))
-);
+app.get("/", (_req, res) => res.send("App is running"));
 
 app.post("/register", register.handleRegister(knex, bcrypt));
 
