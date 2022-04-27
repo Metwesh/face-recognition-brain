@@ -1,8 +1,11 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const cors = require("cors");
+require("dotenv")?.config({ path: "./config.env" });
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0; 
+// Production
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 const knex = require("knex")({
   client: "pg",
   connection: {
@@ -10,6 +13,18 @@ const knex = require("knex")({
     ssl: true,
   },
 });
+
+// Development
+
+// const knex = require("knex")({
+//   client: "pg",
+//   connection: {
+//     host: "127.0.0.1",
+//     user: "mohamedh.aly",
+//     password: "",
+//     database: "smart-brain",
+//   },
+// });
 
 const register = require("./controllers/register");
 const signin = require("./controllers/signin");
@@ -44,5 +59,5 @@ app.post("/imageurl", (req, res) => {
 });
 
 app.listen(process.env.PORT || 3001, () => {
-  console.log(`app is running on port ${process.env.PORT}`);
+  console.log(`App is running on port ${process.env.PORT || 3001}`);
 });
