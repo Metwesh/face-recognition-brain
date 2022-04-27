@@ -46,7 +46,7 @@ app.get("/", (req, res) =>
     .then((data) => {
       res.send(data);
     })
-    .catch((error) => console.log(error))
+    .catch((error) => res.send(error))
 );
 
 app.post("/register", register.handleRegister(knex, bcrypt));
