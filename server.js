@@ -1,30 +1,17 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const cors = require("cors");
+const morgan = require("morgan");
 require("dotenv")?.config({ path: "./config.env" });
-
-// Production
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 const knex = require("knex")({
   client: "pg",
   connection: {
-    connectionString: process.env.DATABASE_URL,
+    connectionString: process.env.DATABASE_URI,
     ssl: true,
   },
 });
-
-// Development
-
-// const knex = require("knex")({
-//   client: "pg",
-//   connection: {
-//     host: "127.0.0.1",
-//     user: "mohamedh.aly",
-//     password: "",
-//     database: "smart-brain",
-//   },
-// });
 
 const register = require("./controllers/register");
 const signin = require("./controllers/signin");
@@ -37,6 +24,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+app.use(morgan());
 app.use(cors());
 
 app.get("/", (_req, res) => res.send("App is running"));
