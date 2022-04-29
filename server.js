@@ -7,10 +7,7 @@ require("dotenv")?.config({ path: "./config.env" });
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 const knex = require("knex")({
   client: "pg",
-  connection: {
-    connectionString: process.env.DATABASE_URI,
-    ssl: true,
-  },
+  connection: process.env.DATABASE_URI,
 });
 
 const register = require("./controllers/register");

@@ -3,24 +3,25 @@ services:
   face-recognition-brain:
     container_name: backend
     build: ./
+    depends_on:
+      - "pg-db"
     command: npm run devStart
     working_dir: /usr/src/face-recognition-api
     environment:
-      DATABASE_URI: postgres://mohamedh.aly:root@postgres:5432/face-recognition-docker-db
-    links:
-      - postgres
+      # protocol:// user:pass@host / database
+      DATABASE_URI: postgres://mohamedh.aly:root@pg-db:5432/face-recognition-docker-db
     ports:
       - "3001:3001"
     volumes:
       - ./:/usr/src/face-recognition-api
   # Postgres
-  db:
-    image: postgres
+  pg-db:
+    build: ./postgres
     restart: always
     environment:
       POSTGRES_USER: mohamedh.aly
       POSTGRES_PASSWORD: root
       POSTGRES_DB: face-recognition-docker-db
-      POSTGRES_HOST: postgres
+      POSTGRES_HOST: pg-db
     ports:
       - "5432:5432"
