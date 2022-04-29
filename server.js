@@ -24,7 +24,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use(morgan());
+app.use(morgan("combined"));
 app.use(cors());
 
 app.get("/", (_req, res) => res.send("App is running"));
