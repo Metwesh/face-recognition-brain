@@ -42,7 +42,7 @@ const app = express();
 // Production
 app.use(
   cors({
-    origin: ["https://face-detect-m.herokuapp.com/"],
+    origin: ["https://face-detect-m-brain.herokuapp.com/"],
   })
 );
 
