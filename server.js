@@ -38,6 +38,8 @@ const redisClient = createClient({
 });
 
 (async function redisConnection() {
+  redisClient.auth(process.env.REDIS_PASSWORD);
+
   redisClient.on("error", (err) => console.log("Redis Client Error", err));
 
   await redisClient.connect();
