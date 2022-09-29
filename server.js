@@ -35,10 +35,7 @@ const knex = require("knex")({
 //   password: process.env.REDIS_PASSWORD,
 // });
 const redisClient = createClient({
-  url: `redis://default:${process.env.REDIS_PASSWORD}@${
-    process.env.REDIS_HOST
-  }:${parseInt(process.env.REDIS_PORT)};
-}`,
+  url: `redis://default:${process.env.REDIS_PASSWORD}@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
 });
 
 (async function redisConnection() {
