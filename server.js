@@ -32,11 +32,29 @@ const auth = require("./middleware/authorization");
 
 const app = express();
 
+// Development
+// app.use(
+//   cors({
+//     origin: ["http://localhost:3000"],
+//   })
+// );
+
+// Production
+app.use(
+  cors({
+    origin: ["https://face-detect-m.herokuapp.com/"],
+  })
+);
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use(morgan("combined"));
-app.use(cors());
+
+// Development
+{
+  /* const redisClient = createClient({ url: process.env.REDIS_URI }); */
+}
 
 // Production
 const redisClient = createClient({
@@ -46,11 +64,6 @@ const redisClient = createClient({
   },
   password: process.env.REDIS_PASSWORD,
 });
-
-// Development
-{
-  /* const redisClient = createClient({ url: process.env.REDIS_URI }); */
-}
 
 (async function redisConnection() {
   redisClient.on("error", (err) => console.log("Redis Client Error", err));
