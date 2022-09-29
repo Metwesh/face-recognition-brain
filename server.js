@@ -27,7 +27,19 @@ app.use(express.json());
 app.use(morgan("combined"));
 app.use(cors());
 
-const redisClient = createClient({ url: process.env.REDIS_URI });
+// Production
+const redisClient = createClient({
+  socket: {
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+  },
+  password: process.env.REDIS_PASSWORD,
+});
+
+// Development
+{
+  /* const redisClient = createClient({ url: process.env.REDIS_URI }); */
+}
 
 (async function redisConnection() {
   redisClient.on("error", (err) => console.log("Redis Client Error", err));
