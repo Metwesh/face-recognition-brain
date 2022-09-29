@@ -27,13 +27,6 @@ const knex = require("knex")({
 /* const redisClient = createClient({ url: process.env.REDIS_URI }); */
 
 // Production
-// const redisClient = createClient({
-//   socket: {
-//     host: process.env.REDIS_HOST,
-//     port: process.env.REDIS_PORT,
-//   },
-//   password: process.env.REDIS_PASSWORD,
-// });
 const redisClient = createClient({
   url: `redis://default:${process.env.REDIS_PASSWORD}@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
 });
@@ -61,10 +54,9 @@ const app = express();
 app.use(cors());
 
 // Production
+// const corsOptions = { origin: ["https://face-detect-m-brain.herokuapp.com/"] };
 // app.use(
-//   cors({
-//     origin: ["https://face-detect-m-brain.herokuapp.com/"],
-//   })
+//   cors(corsOptions)
 // );
 
 app.use(express.urlencoded({ extended: false }));
