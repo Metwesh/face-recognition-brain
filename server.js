@@ -6,10 +6,21 @@ require("dotenv")?.config({ path: "./config.env" });
 
 const { createClient } = require("redis");
 
+// Development
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+// const knex = require("knex")({
+//   client: "pg",
+//   connection: process.env.DATABASE_URI,
+// });
+
+// Production
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 const knex = require("knex")({
   client: "pg",
-  connection: process.env.DATABASE_URI,
+  connection: {
+    connectionString: process.env.DATABASE_URI,
+    ssl: { rejectUnauthorized: false },
+  },
 });
 
 const register = require("./controllers/register");
