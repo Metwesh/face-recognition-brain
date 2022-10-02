@@ -1,7 +1,10 @@
-const handleRegister = (knex, bcrypt) => (req, res) => {
+const jwt = require("jsonwebtoken");
+
+const handleRegister = (redisClient, knex, bcrypt) => (req, res) => {
   const { email, name, hash } = req.body;
-  if (!email || !name || !hash ) {
-      return res.status(400).json('incorrect form submission')
+
+  if (!email || !name || !hash) {
+    return res.status(400).json("incorrect form submission");
   }
   let salt = bcrypt.genSaltSync(10);
   let hashedPassword = bcrypt.hashSync(hash, salt);
@@ -24,16 +27,24 @@ const handleRegister = (knex, bcrypt) => (req, res) => {
               joined: new Date(),
             })
             .then((user) => {
-              res.json(user[0]);
+              const token = signToken(email);
+              setToken(redisClient, token, user[0].id);
+              res.status(200).json({ ...user[0], token });
             });
         })
         .then(trx.commit)
         .catch(trx.rollback);
     })
-    .catch((err) => 
-    console.log(err)
-    // res.status(400).json("E-mail is already in use")
-    );
+    .catch((err) => console.log(err));
 };
+
+const setToken = async (redisClient, token, id) => {
+  return await redisClient.set(token, id).catch((err) => console.log(err));
+};
+
+function signToken(email) {
+  const jwtPayload = { email };
+  return jwt.sign(jwtPayload, process.env.ACCESS_TOKEN_SECRET);
+}
 
 module.exports = { handleRegister };
