@@ -23,20 +23,12 @@ const knex = require("knex")({
   },
 });
 
-// Development
-/* const redisClient = createClient({ url: process.env.REDIS_URI }); */
-
-// Production
-const redisClient = createClient({
-  url: `redis://default:${process.env.REDIS_PASSWORD}@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
-});
+const redisClient = createClient({ url: process.env.REDIS_URI });
 
 (async function redisConnection() {
-  redisClient.on("connect", () =>
-    console.log(`Connected to ${redisClient} Redis`)
-  );
-
-  redisClient.on("error", (err) => console.log("Redis Client Error", err));
+  redisClient
+    .on("connect", () => console.log("Connected to Redis"))
+    .on("error", (err) => console.log("Redis Client Error", err));
 
   await redisClient.connect();
 })();

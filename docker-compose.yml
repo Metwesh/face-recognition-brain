@@ -6,10 +6,9 @@ services:
     depends_on:
       - "pg-db"
       - "redis-db"
-    command: npm run devStart
+    command: npm run dev
     working_dir: /usr/src/face-recognition-api
     environment:
-      # protocol:// user:pass@host / database
       DATABASE_URI: postgres://mohamedh.aly:root@pg-db:5432/face-recognition-docker-db
       REDIS_URI: "redis://redis-db:6379"
     ports:
