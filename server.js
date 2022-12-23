@@ -43,13 +43,13 @@ const auth = require("./middleware/authorization");
 const app = express();
 
 // Development
-app.use(cors());
+// app.use(cors());
 
 // Production
-// const corsOptions = { origin: ["https://face-detect-m-brain.herokuapp.com/"] };
-// app.use(
-//   cors(corsOptions)
-// );
+const corsOptions = { origin: ["https://face-detect-m-brain.herokuapp.com/"] };
+app.use(
+  cors(corsOptions)
+);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
