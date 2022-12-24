@@ -46,7 +46,7 @@ const app = express();
 // app.use(cors());
 
 // Production
-const corsOptions = { origin: ["https://face-detect-m-brain.herokuapp.com/"] };
+const corsOptions = { origin: ["https://face-detect-m.herokuapp.com"] };
 app.use(
   cors(corsOptions)
 );
